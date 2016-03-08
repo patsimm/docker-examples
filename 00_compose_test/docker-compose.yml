@@ -1,0 +1,10 @@
+redis:
+    image: redis
+
+webapp:
+    build: ./webapp
+    ports:
+        - 80:80
+    links:
+        - redis
+
