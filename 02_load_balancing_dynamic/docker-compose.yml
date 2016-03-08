@@ -1,0 +1,18 @@
+redis:
+    image: redis
+
+webapp:
+    hostname: webapp
+    build: ./webapp
+    links:
+        - redis
+
+haproxy:
+    image: tutum/haproxy
+    ports:
+        - 80:80
+    links:
+        - webapp
+    environment:
+        - BACKEND_PORT=80
+        - BALANCE=roundrobin
