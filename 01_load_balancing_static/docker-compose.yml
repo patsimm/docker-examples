@@ -1,0 +1,29 @@
+redis:
+    image: redis
+
+webapp1:
+    hostname: webapp1
+    build: ./webapp
+    links: 
+        - redis
+webapp2:
+    hostname: webapp2
+    build: ./webapp
+    links:
+        - redis
+webapp3:
+    hostname: webapp3
+    build: ./webapp
+    links:
+        - redis
+
+haproxy:
+    image: haproxy
+    ports:
+        - 80:80
+    links:
+        - webapp1
+        - webapp2
+        - webapp3
+    volumes:
+        - ./haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg:ro
