@@ -2,8 +2,8 @@ consul:
     build: ./consul_ui
     ports:
         - 8300:8300
-        - 8400:8400 
-        - 10.0.0.8:8500:8500
+        - 8400:8400
+        - 192.168.255.6:8500:8500
         - 8600:53/udp
     command: agent -server -bootstrap -client 0.0.0.0 -data-dir /data -ui-dir /ui
     restart: always
@@ -12,24 +12,24 @@ swarm_master:
     image: swarm
     restart: always
     ports:
-       - 10.0.0.8:4000:4000
-    command: manage -H :4000 --advertise 10.0.0.8:4000 consul://10.0.0.8:8500
+       - 192.168.255.6:4000:4000
+    command: manage -H :4000 --advertise 192.168.255.6:4000 consul://192.168.255.6:8500
 
 swarm_client :
     image: swarm
     restart: always
-    command: join --advertise 10.0.0.8:2375 consul://10.0.0.8:8500
+    command: join --advertise 192.168.255.6:2375 consul://192.168.255.6:8500
 
 docker_ui:
     image: dockerui/dockerui
     restart: always
-    ports: 
-        - 10.0.0.8:9000:9000
-    command: -e http://10.0.0.8:4000
+    ports:
+        - 192.168.255.6:9000:9000
+    command: -e http://192.168.255.6:4000
     privileged: true
 
 registry:
     image: registry:2
     restart: always
     ports:
-        - 10.0.0.8:5000:5000 
+        - 192.168.255.6:5000:5000
