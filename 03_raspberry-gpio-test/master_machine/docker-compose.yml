@@ -20,14 +20,6 @@ swarm_client :
     restart: always
     command: join --advertise 192.168.255.6:2375 consul://192.168.255.6:8500
 
-docker_ui:
-    image: dockerui/dockerui
-    restart: always
-    ports:
-        - 192.168.255.6:9000:9000
-    command: -e http://192.168.255.6:4000
-    privileged: true
-
 registry:
     image: registry:2
     restart: always
