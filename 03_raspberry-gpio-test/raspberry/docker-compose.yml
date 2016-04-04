@@ -1,4 +1,4 @@
 swarm_client:
     image: hypriot/rpi-swarm
-    command: join --advertise 192.168.255.14:2375 consul://1192.168.255.6:8500
+    command: join --advertise 192.168.255.14:2375 consul://192.168.255.6:8500
     restart: always
