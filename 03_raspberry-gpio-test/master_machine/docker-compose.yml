@@ -1,27 +1,22 @@
-consul:
-    build: ./consul_ui
-    ports:
-        - 8300:8300
-        - 8400:8400
-        - 192.168.255.6:8500:8500
-        - 8600:53/udp
-    command: agent -server -bootstrap -client 0.0.0.0 -data-dir /data -ui-dir /ui
-    restart: always
+version: "2"
+services:
+    swarm_master:
+        image: swarm
+        restart: always
+        ports:
+           - 192.168.255.6:4000:4000
+        network_mode: "host"
+        command: manage -H :4000 --advertise 192.168.255.6:4000 consul://$CONSUL_HOST
 
-swarm_master:
-    image: swarm
-    restart: always
-    ports:
-       - 192.168.255.6:4000:4000
-    command: manage -H :4000 --advertise 192.168.255.6:4000 consul://192.168.255.6:8500
+    swarm_client :
+        image: swarm
+        depends_on:
+            - "swarm_master"
+        restart: always
+        command: join --advertise 192.168.255.6:2375 consul://$CONSUL_HOST
 
-swarm_client :
-    image: swarm
-    restart: always
-    command: join --advertise 192.168.255.6:2375 consul://192.168.255.6:8500
-
-registry:
-    image: registry:2
-    restart: always
-    ports:
-        - 192.168.255.6:5000:5000
+    registry:
+        image: registry:2
+        restart: always
+        ports:
+            - 192.168.255.6:5000:5000

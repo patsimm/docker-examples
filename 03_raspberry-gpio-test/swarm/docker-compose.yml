@@ -1,0 +1,49 @@
+version: "2"
+networks:
+    led_overlay:
+      driver: overlay
+      driver_opts:
+          subnet: 10.0.9.0/24
+services:
+    led_switch: #port 80
+        build:
+            context: ./led_switch
+            args:
+                - "constraint:com.patsimm.architecture==arm"
+        container_name: led
+        devices:
+            - /dev/mem:/dev/mem
+        networks:
+            - led_overlay
+        privileged: true
+        labels:
+            - "constraint:com.patsimm.architecture==arm"
+
+    webinterface: #port 8080
+        build:
+            context: ./webapp
+            args:
+                - "constraint:com.patsimm.architecture==amd64"
+        container_name: ui
+        networks:
+            - led_overlay
+        volumes:
+            - ~/git/docker-examples/03_raspberry-gpio-test/swarm/webapp/src:/usr/src/app/src
+        labels:
+            - "constraint:com.patsimm.architecture==amd64"
+        command: start
+
+    webserver:
+        build:
+            context: ./webserver
+            args:
+                - "constraint:com.patsimm.architecture==amd64"
+        depends_on:
+            - led_switch
+            - webinterface
+        ports:
+            - 0.0.0.0:80:80
+        labels:
+            -  "constraint:com.patsimm.architecture==amd64"
+        networks:
+            - led_overlay
