@@ -31,11 +31,11 @@ The app is running in 3 different containers running on 2 different machines.
  - webinterface (on the vServer, this could also run on the Raspberry Pi)
  - led_switch (on the Raspberry Pi)
 
-The led_switch is a small python app running on a Raspberry Pi that basically provides a web API to turn on and off a GPIO-PIN. The API has 3 functions: `led/on`, `led/off` and `led/state`. Every function returns the actual state in JSON-format. Example: `{state: "ON}`. 
+The led_switch is a small python app running on a Raspberry Pi that basically provides a web API to turn on and off a GPIO-PIN. The API has 3 functions: `/led/on`, `/led/off` and `/led/state`. Every function returns the actual state in JSON-format. Example: `{state: "ON}`. 
 
 The webinterface is written in Node using React. It consists of one Button and desplays the current state. The one Button turns the led on or off.
 
 The nginx container connects the other two apps. All the containers are in the same docker overlay network called 'led_overlay'. The webinterface's container name is `ui` and the led_switches is `led`. So that has to be done in the `nginx.conf` is 
 
  - to forward the root directory `/` to `http://ui:80`
- - and to forward the api directory `led` to `http://led:8080`.
+ - and to forward the api directory `/led` to `http://led:8080`.
