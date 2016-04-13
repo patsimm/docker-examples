@@ -31,7 +31,7 @@ The app is running in 3 different containers running on 2 different machines.
  - webinterface (on the vServer, this could also run on the Raspberry Pi)
  - led_switch (on the Raspberry Pi)
 
-The led_switch is a small python app running on a Raspberry Pi that basically provides a web API to turn on and off a GPIO-PIN. The API has 3 functions: `/led/on`, `/led/off` and `/led/state`. Every function returns the actual state in JSON-format. Example: `{state: "ON}`. 
+The led_switch is a small python app running on a Raspberry Pi that basically provides a web API to turn on and off a GPIO-PIN. The API has 3 functions: `/led/on`, `/led/off` and `/led/state`. Every function returns the actual state in JSON-format. Example: `{state: "ON"}`. 
 
 The webinterface is written in Node using React. It consists of one Button and desplays the current state. The one Button turns the led on or off.
 
