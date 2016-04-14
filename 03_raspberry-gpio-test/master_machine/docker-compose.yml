@@ -14,9 +14,3 @@ services:
             - "swarm_master"
         restart: always
         command: join --advertise 192.168.255.6:2375 consul://$CONSUL_HOST
-
-    registry:
-        image: registry:2
-        restart: always
-        ports:
-            - 192.168.255.6:5000:5000
