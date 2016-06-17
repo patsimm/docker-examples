@@ -1,4 +1,5 @@
-version: "2"
+version: '2'
+
 networks:
     led_overlay:
       driver: overlay
@@ -28,7 +29,7 @@ services:
         networks:
             - led_overlay
         volumes:
-            - ~/git/docker-examples/03_raspberry-gpio-test/swarm/webapp/src:/usr/src/app/src
+            - /home/patsimm/git/docker-examples/03_raspberry-gpio-test/swarm/webapp/src:/usr/src/app/src
         labels:
             - "constraint:com.patsimm.architecture==amd64"
         command: start

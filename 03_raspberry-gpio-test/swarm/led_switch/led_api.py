@@ -2,7 +2,7 @@ from led_switch import LED_Switch as LED
 from flask import Flask
 app = Flask(__name__)
 
-led = LED(7)
+led = LED(4)
 
 
 @app.route("/led/on")
