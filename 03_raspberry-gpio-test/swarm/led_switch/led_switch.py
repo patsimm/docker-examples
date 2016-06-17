@@ -10,7 +10,7 @@ class LED_Switch:
 
     def __init__(self, pin=7):
         self.led_pin = pin
-        GPIO.setmode(GPIO.BOARD)
+        GPIO.setmode(GPIO.BCM)
         GPIO.setup(self.led_pin, GPIO.OUT)
         GPIO.output(self.led_pin, GPIO.LOW)
         self.status = LED_Switch.OFF
